@@ -1,6 +1,6 @@
 {
   "name": "fluentui-next-appdir-directive",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "SWC plugin to add \"use client\" directive to Fluent UI, Griffel, and any other packages.",
   "author": "Esteban Munoz Facusse",
   "license": "ISC",
