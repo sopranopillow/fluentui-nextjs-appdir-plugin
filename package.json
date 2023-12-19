@@ -9,8 +9,7 @@
   ],
   "main": "target/wasm32-wasi/release/fluentui_next_appdir_directive.wasm",
   "scripts": {
-    "prepublishOnly": "cargo build-wasi --release",
-    "prepack": "cargo prepublish --release && cp target/wasm32-wasi/release/fluentui_next_appdir_directive.wasm ."
+    "prepack": "cargo build-wasi --release && cp target/wasm32-wasi/release/fluentui_next_appdir_directive.wasm ."
   },
   "files": [],
   "preferUnplugged": true
