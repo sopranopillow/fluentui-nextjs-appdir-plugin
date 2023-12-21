@@ -1,35 +1,23 @@
+use directive_transform::{Config, TransformVisitor};
 use swc_core::{
     ecma:: {
-        ast::{ModuleItem, ExprStmt, Str, Expr, Lit, Stmt},
-        transforms::testing::test,
-        // for some reason vscode complains of unused as_folder, but it's needed for the tests below
-        visit::{as_folder, VisitMut},
+        ast::Program,
+        visit::VisitMutWith
     },
-    common::DUMMY_SP,
+    plugin::{plugin_transform, proxies::TransformPluginProgramMetadata, metadata::TransformPluginMetadataContextKind},
 };
 
-pub struct TransformVisitor;
+#[plugin_transform]
+pub fn process_transform(mut program: Program, data: TransformPluginProgramMetadata) -> Program {
+    let config_json = &data.get_transform_plugin_config()
+        .expect("failed to get plugin data, paths must be provided");
+    let config = serde_json::from_str::<Config>(config_json).expect("invalid config for fluentui-next-appdir-directive swc plugin");
 
-impl VisitMut for TransformVisitor {
-    fn visit_mut_module(&mut self,n: &mut swc_core::ecma::ast::Module) {
-        // Creating line for "use client" directive
-        let directive = &[ModuleItem::Stmt(Stmt::Expr(ExprStmt {
-            span: DUMMY_SP,
-            expr: Box::new(Expr::Lit(Lit::Str(Str {
-                span: DUMMY_SP,
-                value: "use client".into(),
-                raw: None
-            })))
-        }))];
+    let file_path = match data.get_context(&TransformPluginMetadataContextKind::Filename) {
+        Some(s) => s,
+        None => String::from("")
+    };
 
-        // We need to splice this to be able to prepend since rust doesn't provide this functionality
-        n.body.splice(0..0, directive.iter().cloned());
-    }
+    program.visit_mut_with(&mut TransformVisitor {file_path: file_path, paths: config.paths});
+    program
 }
-
-test!(
-    Default::default(),
-    |_| as_folder(TransformVisitor),
-    append_directive_to_top,
-    r#"console.log("transform");"#
-);
