@@ -9,7 +9,7 @@ lto = true
 
 [dependencies]
 serde = "1"
-swc_core = { version = "0.78.*", features = [
+swc_core = { version = "0.90.*", features = [
   "common",
   "ecma_ast",
   "ecma_codegen",
