@@ -59,3 +59,35 @@ module.exports = nextConfig;
 ```
 
 > Note: strings inside paths should only contain the scope/package name, in our case @fluentui/react-components -> @fluentui
+
+### My modules are getting ignored and gives me an error in NextJS 14.1.1+: 
+
+```js
+// next.config.js
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    swcPlugins: [
+      ["fluentui-next-appdir-directive",{
+         paths: [
+          "@griffel",
+          "@fluentui"
+          // 👇 you can add another dependency that needs the directive
+          "your dependency name"
+        ]
+      }],
+    ],
+  },
+  // 👇 packages that need the directive
+  transpilePackages: ["@fluentui/react-components"]
+};
+
+module.exports = nextConfig;
+```
+
+### My packages aren't getting tree-shaken
+
+This is a known issue of using this directive, one way to get around it is to optimizePackage/modularizeImports imports:
+* https://nextjs.org/docs/app/api-reference/next-config-js/optimizePackageImports
+* https://nextjs.org/docs/architecture/nextjs-compiler#modularize-imports

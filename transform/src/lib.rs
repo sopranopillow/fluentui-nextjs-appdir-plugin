@@ -1,10 +1,9 @@
 use serde::Deserialize;
 use swc_core::{
-    ecma:: {
-        ast::{ModuleItem, ExprStmt, Str, Expr, Lit, Stmt},
+    common::DUMMY_SP, ecma:: {
+        ast::{Expr, ExprStmt, Lit, Module, ModuleItem, Stmt, Str},
         visit::VisitMut,
-    },
-    common::DUMMY_SP,
+    }
 };
 
 #[derive(Debug, Default, Clone, Deserialize)]
@@ -20,21 +19,19 @@ pub struct TransformVisitor {
 }
 
 impl VisitMut for TransformVisitor {
-    fn visit_mut_module(&mut self,n: &mut swc_core::ecma::ast::Module) {
+    fn visit_mut_module(&mut self, n: &mut Module) {
         for path in &self.paths {
             if self.file_path.contains(path) {
                 // Creating line for "use client" directive
-                let directive = &[ModuleItem::Stmt(Stmt::Expr(ExprStmt {
+                let directive = ModuleItem::Stmt(Stmt::Expr(ExprStmt {
                     span: DUMMY_SP,
                     expr: Box::new(Expr::Lit(Lit::Str(Str {
                         span: DUMMY_SP,
                         value: "use client".into(),
                         raw: None
                     })))
-                }))];
-
-                // We need to splice this to be able to prepend since rust doesn't provide this functionality
-                n.body.splice(0..0, directive.iter().cloned());
+                }));
+                n.body.insert(0, directive.clone());
             }
         }
     }
