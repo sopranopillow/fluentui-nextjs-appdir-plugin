@@ -87,8 +87,8 @@ module.exports = nextConfig;
 ```
 
 ### Version compat
-- For versions `< 14.1.2` please use 1.0.5 otherwise there wil be issues with the swc_core version causing rust to panic.
-- For version `>= 14.1.2` please use 1.0.7 for the same reason as above, 1.0.7 introduced version `0.90.*` of swc_core which makes it compatible with the versions used in `<= 14.1.2`.
+- For versions `< 14.1.2` please use 0.1.5 otherwise there wil be issues with the swc_core version causing rust to panic.
+- For version `>= 14.1.2` please use 0.1.7 for the same reason as above, 0.1.7 introduced version `0.90.*` of swc_core which makes it compatible with the versions used in `<= 14.1.2`.
 
 ### My packages aren't getting tree-shaken
 
