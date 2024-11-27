@@ -1,6 +1,6 @@
 {
   "name": "fluentui-next-appdir-directive",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "SWC plugin to add \"use client\" directive to Fluent UI, Griffel, and any other packages.",
   "author": "Esteban Munoz Facusse",
   "license": "ISC",
@@ -9,8 +9,11 @@
   ],
   "main": "target/wasm32-wasi/release/fluentui_next_appdir_directive.wasm",
   "scripts": {
-    "prepublishOnly": "cargo build-wasi --release",
-    "prepack": "cargo build-wasi --release && cp target/wasm32-wasi/release/fluentui_next_appdir_directive.wasm ."
+    "build-wasi": "cargo build --target wasm32-wasi",
+    "build-wasm32": "cargo build --target wasm32-unknown-unknown",
+    "prepare": "yarn build-wasi --release",
+    "prepare:release": "yarn build-wasi --release && cp target/wasm32-wasi/release/fluentui_next_appdir_directive.wasm ./fluentui_next_appdir_directive.wasm",
+    "test": "cargo test -p directive_transform"
   },
   "files": [
     "fluentui_next_appdir_directive.wasm"

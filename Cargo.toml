@@ -9,10 +9,13 @@ crate-type = ["cdylib"]
 [profile.release]
 lto = false
 
+[workspace]
+members = ["transform"]
+
 [dependencies]
 serde = "1"
 serde_json = "1.0.100"
-swc_core = { version = "0.90.*", features = ["ecma_plugin_transform", "ecma_parser"] }
+swc_core = { version = "5.0.4", features = ["ecma_plugin_transform", "ecma_parser"] }
 directive_transform = { path = "./transform" }
 
 # .cargo/config defines few alias to build plugin.

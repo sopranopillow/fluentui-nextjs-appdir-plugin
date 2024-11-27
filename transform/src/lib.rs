@@ -1,21 +1,22 @@
 use serde::Deserialize;
 use swc_core::{
-    common::DUMMY_SP, ecma:: {
+    common::DUMMY_SP,
+    ecma::{
         ast::{Expr, ExprStmt, Lit, Module, ModuleItem, Stmt, Str},
         visit::VisitMut,
-    }
+    },
 };
 
 #[derive(Debug, Default, Clone, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Config {
     #[serde(default)]
-    pub paths: Vec<String>
+    pub paths: Vec<String>,
 }
 
 pub struct TransformVisitor {
     pub file_path: String,
-    pub paths: Vec<String>
+    pub paths: Vec<String>,
 }
 
 impl VisitMut for TransformVisitor {
@@ -28,8 +29,8 @@ impl VisitMut for TransformVisitor {
                     expr: Box::new(Expr::Lit(Lit::Str(Str {
                         span: DUMMY_SP,
                         value: "use client".into(),
-                        raw: None
-                    })))
+                        raw: None,
+                    }))),
                 }));
                 n.body.insert(0, directive.clone());
             }
