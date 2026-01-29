@@ -8,7 +8,7 @@ authors = ["Esteban Munoz Facusse"]
 lto = true
 
 [dependencies]
-serde = { version = "1.0", features = ["derive"] }
+serde = "1.0"
 swc_core = { version = "54.0.*", features = [
   "common",
   "ecma_ast",
@@ -24,4 +24,4 @@ swc_core = { version = "54.0.*", features = [
   "ecma_parser",
   "ecma_transforms_react",
 ] }
-testing = "4.0.0"
+testing = "19.0.0"
