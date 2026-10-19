@@ -9,7 +9,7 @@ lto = true
 
 [dependencies]
 serde = "1.0"
-swc_core = { version = "54.0.*", features = [
+swc_core = { version = "79.0.*", features = [
   "common",
   "ecma_ast",
   "ecma_codegen",
@@ -19,9 +19,9 @@ swc_core = { version = "54.0.*", features = [
 
 [dev-dependencies]
 serde_json = "1.0"
-swc_core = { version = "54.0.*", features = [
+swc_core = { version = "79.0.*", features = [
   "testing_transform",
   "ecma_parser",
   "ecma_transforms_react",
 ] }
-testing = "19.0.0"
+testing = "27.0.0"

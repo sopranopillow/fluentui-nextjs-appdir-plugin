@@ -15,5 +15,5 @@ members = ["transform"]
 [dependencies]
 serde = "1.0"
 serde_json = "1.0"
-swc_core = { version = "54.0.*", features = ["ecma_plugin_transform", "ecma_parser"] }
+swc_core = { version = "79.0.*", features = ["ecma_plugin_transform", "ecma_parser"] }
 directive_transform = { path = "./transform" }
